@@ -1,4 +1,7 @@
 {
   "runtime": "node_web",
+  "startCommand": "npm start"
+}{
+  "runtime": "node_web",
   "startCommand": "node server.js"
 }
