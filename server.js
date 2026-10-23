@@ -1,7 +1,7 @@
 import express from 'express';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 80;
 
 // ВАШ ID Google Apps Script
 const GAS_URL = 'https://script.google.com/u/0/home/projects/167xwC4wblR9V5QK8syWS4E2VqnN5Y4xRlb_NesKSOJt-vR6P9FTdMHn3/edit';
