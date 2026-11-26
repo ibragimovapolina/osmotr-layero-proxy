@@ -3,7 +3,7 @@ import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Твой правильный URL веб-приложения Google Apps Script
+// Твой URL веб-приложения Google Apps Script
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzWLCPKI12R4Xi4pujuiOByL_SOyFTZ5u03KnuWz5LI7vyFBB31y9XBDBx6JOIPbPZg/exec';
 
 // Разрешаем CORS для всех (наш фронтенд на GitHub Pages)
@@ -27,6 +27,7 @@ app.post('/', async (req, res) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(req.body),
+      redirect: 'follow' // <--- ВАЖНО: разрешаем следовать редиректу Google
     });
     const data = await response.text();
     res.status(200).send(data);
@@ -38,8 +39,15 @@ app.post('/', async (req, res) => {
 // Для GET-запросов (чтение справочников, проверка API)
 app.get('/', async (req, res) => {
   try {
+    // Формируем URL с параметрами
     const query = new URLSearchParams(req.query).toString();
-    const response = await fetch(`${GAS_URL}?${query}`);
+    const targetUrl = `${GAS_URL}?${query}`;
+    
+    const response = await fetch(targetUrl, {
+      method: 'GET',
+      redirect: 'follow' // <--- ВАЖНО: разрешаем следовать редиректу Google
+    });
+    
     const data = await response.text();
     res.status(200).send(data);
   } catch (error) {
